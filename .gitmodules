@@ -1,0 +1,3 @@
+[submodule "hst_notebooks"]
+	path = hst_notebooks
+	url = https://github.com/daltshuler4/hst_notebooks.git
