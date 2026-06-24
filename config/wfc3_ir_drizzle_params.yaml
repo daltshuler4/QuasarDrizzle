@@ -1,0 +1,32 @@
+# WFC3/IR AstroDrizzle Parameters
+# All drizzle parameters for this pipeline live here.
+# Notebooks read from this file — do not hardcode these values in notebooks.
+# Run /sync-params to verify notebooks are reading from this file correctly.
+
+# --- Pixel grid ---
+final_scale: 0.09          # output pixel scale in arcsec/pixel (native WFC3/IR = 0.13)
+final_pixfrac: 1.0         # pixel fraction (drop size); tune after inspecting outputs
+
+# --- Kernel ---
+final_kernel: square       # drizzle kernel: square, point, gaussian, turbo, tophat, lanczos3
+
+# --- Bit masks (which pixels to use) ---
+driz_sep_bits: 512         # bits for separate drizzle step (512 = good WFC3/IR pixels)
+final_bits: 512            # bits for final combination step
+
+# --- Combination ---
+combine_type: minmed        # how to combine exposures: minmed, median, iminmed, sum, mean
+
+# --- Sky subtraction ---
+skymethod: localmin         # sky method: localmin, globalmin, match, global+match
+skysub: True
+
+# --- Output ---
+final_wcs: True            # recompute output WCS
+clean: True                # remove intermediate drizzle products after combining
+
+# --- Notes ---
+# pixfrac=1.0 is a safe starting point; reduce (e.g. 0.8) to improve resolution
+# if you have sufficient dithers (>4 exposures per target).
+# final_scale=0.09 oversamples slightly relative to native 0.13"/pix.
+# Adjust after inspecting output in 05_inspect_outputs.ipynb.

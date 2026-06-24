@@ -1,0 +1,30 @@
+# FITS and astronomical data files
+*.fits
+*.fit
+*.fits.gz
+*.fz
+
+# Downloaded data directories (can be large)
+data/raw/
+data/processed/
+mastDownload/
+
+# Drizzle and pipeline logs
+*.log
+*.ecsv
+
+# Python
+*.pyc
+*.pyo
+__pycache__/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# AI session state (machine-specific, auto-written)
+.claude/session_heartbeat.txt
+
+# OS
+.DS_Store
+Thumbs.db
