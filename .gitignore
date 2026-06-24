@@ -4,9 +4,7 @@
 *.fits.gz
 *.fz
 
-# Downloaded data directories (can be large)
-data/raw/
-data/processed/
+# Downloaded data and temp directories (large files ignored by extension above)
 mastDownload/
 
 # Drizzle and pipeline logs
