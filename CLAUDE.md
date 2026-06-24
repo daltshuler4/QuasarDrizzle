@@ -51,8 +51,8 @@ At the very start of every session, ask the user:
 
 **If the user says yes — Editing Mode:**
 1. Read HANDOFF.md and summarize current pipeline state in 2-3 sentences
-2. Compare `.claude/session_heartbeat.txt` to the last HANDOFF.md entry date:
-   - If the heartbeat is NEWER than the last HANDOFF.md entry, unsaved work exists —
+2. Compare `.claude/session_heartbeat.txt` to the "Last updated" date in HANDOFF.md:
+   - If the heartbeat is NEWER than the Last updated date, unsaved work exists —
      tell the user and ask whether this was a crash (run /reconstruct-session) or
      whether another window may be active (ask them to /checkpoint it first)
    - If the heartbeat matches or is older, state is clean — proceed normally
@@ -61,8 +61,10 @@ At the very start of every session, ask the user:
 **If the user says no — Advisory Mode:**
 - Answer questions, explain code, read files, and provide guidance only
 - Do NOT edit any files, notebooks, configs, or run any commands that write to disk
-- If asked to make a change, say: "I'm in advisory mode — run /resume-editing if
-  you'd like me to make changes"
+- Exception: you MAY append to TODO.md in advisory mode — it exists to capture ideas
+  regardless of mode
+- If asked to make any other change, say: "I'm in advisory mode — run /resume-editing
+  if you'd like me to make changes"
 - /resume-editing will re-run the safety checks above before switching modes
 
 ## Conventions
@@ -73,20 +75,28 @@ At the very start of every session, ask the user:
 - Always read HANDOFF.md before starting any work session
 - All large files (.fits, .log) are gitignored — only code and config are tracked
 
+## Handoff Structure
+- **HANDOFF.md** — always the current state snapshot only (~40 lines). Overwritten at
+  each /end-session and /checkpoint. Never a log — read this first every session.
+- **sessions/** — one file per session (`sessions/YYYY-MM-DD_session.md`), written at
+  /end-session. Full narrative detail lives here. Read the most recent file for context;
+  look back further if needed.
+
 ## Crash / Missed End-Session Recovery
 A Stop hook automatically writes a timestamp to `.claude/session_heartbeat.txt`
 after every agent response. At the start of each session:
 
 1. Check `.claude/session_heartbeat.txt` — this shows when the last session was active
-2. Compare that timestamp to the most recent session entry date in HANDOFF.md
-3. If the heartbeat timestamp is more than a few hours newer than the last HANDOFF.md
-   entry, the previous session ended without /end-session (crash or accidental close)
-4. In that case: run /reconstruct-session before doing any other work
+2. Compare that timestamp to the "Last updated" date in HANDOFF.md
+3. If the heartbeat is more than a few hours newer, run /reconstruct-session —
+   it will first check whether the gap is just advisory activity (TODO.md only,
+   no git commits). If so, it clears automatically. If real work is found, it
+   walks through full reconstruction before proceeding.
 
 ## Available Commands
 | Command | Purpose |
 |---|---|
-| `/review-notebooks` | Scan notebooks for redundancy and inconsistencies |
+| `/notebook-check` | Scan notebooks for redundant code, hardcoded parameters, inconsistencies |
 | `/push-to-github` | Stage, commit, and push current work |
 | `/pipeline-status` | Check which quasars are at which pipeline stage |
 | `/validate-downloads` | Verify FLT files before processing |
@@ -96,13 +106,13 @@ after every agent response. At the start of each session:
 | `/update-docs` | Refresh docs/ from current notebook/data state |
 | `/summarize-results` | Generate results table across all 6 quasars |
 | `/add-instrument` | Scaffold ACS or other instrument extension |
-| `/end-session` | Write structured update to HANDOFF.md |
+| `/end-session` | Write session detail to sessions/, overwrite HANDOFF.md with current state |
 | `/log-issue` | Append a known issue to this file |
-| `/reconstruct-session` | Rebuild HANDOFF.md from git history after a crash |
+| `/reconstruct-session` | Rebuild session record from git history after a crash |
 | `/sync-from-github` | Safely pull from remote, diagnose divergence, check for conflicts |
 | `/advisory-mode` | Switch to read-only mode — answers questions, no edits |
 | `/resume-editing` | Switch from advisory to editing mode with safety checks |
-| `/checkpoint` | Write a mid-session progress snapshot to HANDOFF.md |
+| `/checkpoint` | Update HANDOFF.md in-place with current state (no session archive) |
 
 ## Known Issues — Always Check Before Acting
 <!-- Entries added via /log-issue -->

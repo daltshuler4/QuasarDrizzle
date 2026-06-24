@@ -1,26 +1,30 @@
 # /checkpoint
-# Writes a mid-session progress snapshot to HANDOFF.md without ending the session.
-# Use this during long sessions, before switching tasks, or when another window
-# may need to know your current progress.
+# Updates HANDOFF.md in-place with current state. No session archive is created —
+# that only happens at /end-session. Use this during long sessions to keep HANDOFF.md
+# current in case of a crash or concurrent window.
 
-Write a mid-session checkpoint entry to HANDOFF.md.
+Write a mid-session checkpoint by updating HANDOFF.md with the current state:
 
-A checkpoint is lighter than /end-session — it records the current state without
-implying the session is over. Use it:
-- During a long session after completing a significant step
-- Before handing off to another window or machine
+## When to run this
+- After completing a significant step during a long session
+- Before switching tasks or handing off to another window
 - Any time you want a save state in case of a crash
-- When another window asks for your current progress before it switches to editing mode
+- When another window needs to know your current progress
 
-## What to write
-
+## What to do
 1. Inspect data/raw/ and data/processed/ to get the current pipeline state
-2. Summarize what has been accomplished since the last HANDOFF.md entry (3-5 bullets)
+2. Note what has been accomplished since the last HANDOFF.md update (3–5 bullets)
 3. Note any work currently in progress (e.g. "alignment running for quasar_03")
-4. Write the entry marked clearly as a checkpoint, not a session end:
+4. Overwrite HANDOFF.md with the updated current state:
 
-## Checkpoint — <DATE> <TIME>
-**Progress since last entry:**
+# Project Handoff — Current State
+
+> This file is always the current snapshot. Full session history is in `sessions/`.
+> Read the most recent file there for narrative context, or look back further if needed.
+
+## Last updated — <DATE> <TIME> (checkpoint)
+
+**Progress since last update:**
 - ...
 
 **Pipeline state:**
@@ -31,8 +35,11 @@ implying the session is over. Use it:
 **In progress:**
 - ...
 
-**Note:** Session still active — this is a mid-session checkpoint, not an end-of-session summary.
+**Open issues:**
+- ...
 
-Prepend this at the TOP of HANDOFF.md so it is the first thing the next reader sees.
-Show the proposed checkpoint for approval before writing.
+**Next steps:**
+1. ...
+
+Show the proposed HANDOFF.md for approval before writing.
 The session continues after this — do not stop working unless the user says to.

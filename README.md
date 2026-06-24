@@ -70,6 +70,7 @@ writes a mid-session snapshot without ending the session:
 | `/advisory-mode` | Switch to read-only mode. The agent answers questions and explains code but makes no changes to any files. Use when you want guidance without edits. |
 | `/resume-editing` | Switch from advisory to editing mode. Reads HANDOFF.md, checks for unsaved work or concurrent sessions, and confirms it is safe to make changes before switching. |
 | `/log-issue` | Permanently log a mistake the agent keeps making. Adds a dated entry to the Known Issues section of CLAUDE.md so every future session sees it automatically. |
+| `/notebook-check` | Scan all notebooks for redundant code, hardcoded parameters, and inconsistencies. Reports findings only — no changes made. |
 
 ### GitHub — Push, Pull, and Recovery
 
@@ -87,7 +88,6 @@ writes a mid-session snapshot without ending the session:
 | `/rename-quasars` | After notebook 01 — replace quasar_01–06 placeholder folder names with real target names from MAST. Updates all directories and quasars.md. |
 | `/check-alignment` | After notebook 03 — parse TweakReg logs for failed alignments or large residuals. Flags any quasars that may need re-alignment. |
 | `/sync-params` | Check that config/wfc3_ir_drizzle_params.yaml matches what is actually used in 04_drizzle.ipynb. Flags drift between config and notebook. |
-| `/review-notebooks` | Periodic cleanup — scan all notebooks for redundant code, hardcoded parameters, and inconsistencies. Reports only, no changes. |
 | `/update-docs` | Refresh docs/quasars.md and docs/pipeline_overview.md to reflect the current state of the project. Shows proposed changes for approval. |
 | `/summarize-results` | After drizzling is complete — generate a science results table across all 6 quasars and add it to docs/quasars.md. |
 | `/add-instrument` | When ready to extend to ACS — scaffolds new notebooks, config, and data directories for the new instrument. Asks about download requirements from scratch. |

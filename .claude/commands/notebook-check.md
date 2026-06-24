@@ -1,4 +1,4 @@
-# /review-notebooks
+# /notebook-check
 # Scans all notebooks for redundant code, hardcoded parameters, and inconsistencies.
 # Reports findings only — does not make changes.
 
