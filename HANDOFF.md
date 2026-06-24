@@ -1,5 +1,29 @@
 # Session Handoff Log
 
+## Checkpoint — 2026-06-24
+
+**Progress since last entry:**
+- Set up hst_notebooks as a git submodule (daltshuler4/hst_notebooks fork of spacetelescope/hst_notebooks), embedded at QuasarDrizzle/hst_notebooks/
+- Fixed .gitignore to track data directory structure while still ignoring .fits files by extension
+- Pushed 2 new commits to github.com/daltshuler4/QuasarDrizzle
+- Saved DrizzlePac Handbook PDF URL and DrizzlePac notebook index URL to persistent memory
+- Confirmed no science work has started yet — all FITS counts are 0
+
+**Pipeline state:**
+| Quasar | Downloaded | Aligned | Drizzled |
+|--------|-----------|---------|----------|
+| quasar_01 | ✗ | ✗ | ✗ |
+| quasar_02 | ✗ | ✗ | ✗ |
+| quasar_03 | ✗ | ✗ | ✗ |
+| quasar_04 | ✗ | ✗ | ✗ |
+| quasar_05 | ✗ | ✗ | ✗ |
+| quasar_06 | ✗ | ✗ | ✗ |
+
+**In progress:**
+- Nothing running; ready to create environment.yml or begin notebook 01
+
+**Note:** Session still active — this is a mid-session checkpoint, not an end-of-session summary.
+
 ## Session — 2026-06-24 (full setup session)
 **What we did:**
 - Designed and built the full QuasarDrizzle project structure from scratch
