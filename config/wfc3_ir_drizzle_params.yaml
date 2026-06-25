@@ -4,8 +4,8 @@
 # Run /sync-params to verify notebooks are reading from this file correctly.
 
 # --- Pixel grid ---
-final_scale: 0.09          # output pixel scale in arcsec/pixel (native WFC3/IR = 0.13)
-final_pixfrac: 1.0         # pixel fraction (drop size); tune after inspecting outputs
+final_scale: 0.06          # output pixel scale in arcsec/pixel (native WFC3/IR = 0.13; docs suggest 0.065, advisor recommends 0.06)
+final_pixfrac: 0.8         # pixel fraction (drop size); 0.8 improves resolution with sufficient dithers
 
 # --- Kernel ---
 final_kernel: square       # drizzle kernel: square, point, gaussian, turbo, tophat, lanczos3
@@ -25,8 +25,18 @@ skysub: True
 final_wcs: True            # recompute output WCS
 clean: True                # remove intermediate drizzle products after combining
 
+# --- Download ---
+download:
+  proposal_id: '14706'
+  instrument_name: 'WFC3/IR'
+  project: 'HST'
+  product_sub_group: 'FLT'
+  data_type: 'CALWF3'
+
 # --- Notes ---
 # pixfrac=1.0 is a safe starting point; reduce (e.g. 0.8) to improve resolution
 # if you have sufficient dithers (>4 exposures per target).
-# final_scale=0.09 oversamples slightly relative to native 0.13"/pix.
-# Adjust after inspecting output in 05_inspect_outputs.ipynb.
+# final_scale=0.06 set per advisor recommendation (docs suggest 0.065 for WFC3/IR).
+# Both oversample relative to native 0.13"/pix — justified by dither coverage.
+# final_pixfrac=0.8 improves resolution; valid given >4 exposures per target for most quasars.
+# Revisit after inspecting output in 05_inspect_outputs.ipynb.

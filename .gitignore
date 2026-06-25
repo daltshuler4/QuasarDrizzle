@@ -11,6 +11,9 @@ mastDownload/
 *.log
 *.ecsv
 
+# Generated catalog files (recreated by running notebook cells)
+*.cat
+
 # Python
 *.pyc
 *.pyo
@@ -19,6 +22,7 @@ __pycache__/
 
 # Jupyter
 .ipynb_checkpoints/
+notebooks/archive/
 
 # AI session state (machine-specific, auto-written)
 .claude/session_heartbeat.txt
