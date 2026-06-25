@@ -1,0 +1,20 @@
+# frame: output
+# refimage: shifts_wcs.fits[wcs]
+# form: delta
+# units: pixels
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k03krq_flt.fits    0.527105  -1.562371    0.004642     1.000202   0.054130  0.054157
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k03ktq_flt.fits    nan  nan    nan     nan   0.000000  0.000000
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k03kuq_flt.fits    0.509315  -1.575357    0.008991     1.000219   0.061631  0.046669
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k03kwq_flt.fits    nan  nan    nan     nan   0.000000  0.000000
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k03kyq_flt.fits    0.474998  -1.578061    0.004181     1.000058   0.079201  0.058739
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k03l0q_flt.fits    nan  nan    nan     nan   0.000000  0.000000
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k03l2q_flt.fits    0.504787  -1.572431    0.006478     1.000054   0.081945  0.056469
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k03l4q_flt.fits    nan  nan    nan     nan   0.000000  0.000000
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k04hlq_flt.fits    0.116155  0.209571    359.962347     0.999789   0.040275  0.044799
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k04hnq_flt.fits    -0.182720  -1.552248    0.005693     1.000293   0.073032  0.065635
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k04hpq_flt.fits    0.005673  0.480075    359.964727     0.999781   0.056554  0.047319
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k04hrq_flt.fits    -0.195358  -1.543649    0.005199     1.000247   0.032991  0.037138
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k04htq_flt.fits    0.266579  0.515058    359.960416     0.999796   0.106517  0.063819
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k04hvq_flt.fits    -0.135892  -1.569748    0.007976     1.000280   0.086692  0.060970
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k04hxq_flt.fits    -0.070679  0.620029    359.968753     0.999775   0.044503  0.057899
+/home/daltshuler/RedQuasarResearch/Repos/QuasarDrizzle/data/raw/W2M1042+1641/id5k04hzq_flt.fits    -0.182024  -1.602071    0.014274     1.000267   0.078942  0.053337

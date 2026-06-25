@@ -3,39 +3,45 @@
 > This file is always the current snapshot. Full session history is in `sessions/`.
 > Read the most recent file there for narrative context, or look back further if needed.
 
-## Last updated — 2026-06-25 (end-session)
+## Last updated — 2026-06-25 (afternoon)
 
 **Progress since last update:**
-- Rebuilt TweakReg workflow from STScI align_to_catalogs reference notebook
-- Restructured notebooks: trial workflow promoted to main, old notebooks archived
-- Renamed data/processed/ dirs from quasar_01–06 to real target names
-- Built 02_tweakreg.ipynb through Gaia TweakReg diagnostic cell (incomplete —
-  shift file inspection and updatehdr=True commit cell not yet written)
-- Discovered all 6 quasars have preliminary drizzled outputs (unverified quality)
+- Completed `02_tweakreg.ipynb` notebook cleanup: 7 clean cells, SDSS removed, all imports consolidated
+- TweakReg runs end-to-end for W2M1042+1641: 12/16 images fit, RMS 0.03–0.11px
+- 4 images still have nan shifts (id5k03ktq, id5k03kwq, id5k03l0q, id5k03l4q) — cause unknown
+- All TweakReg outputs (shifts, log, residual/vector PNGs) routed to `data/tweakreg/`
+- Fixed `03_drizzle.ipynb` missing imports — all imports now in a setup cell
 
 **Pipeline state:**
 | Quasar | Downloaded | Aligned | Drizzled |
 |--------|-----------|---------|----------|
 | W2M0811+0115 | ✓ (16 FLT) | ✗ | ⚠ unverified (2 DRZ) |
-| W2M1042+1641 | ✓ (16 FLT) | ✗ | ⚠ unverified (2 DRZ) |
+| W2M1042+1641 | ✓ (16 FLT) | ⚠ stale copies in aligned/ | ⚠ unverified (2 DRZ) |
 | W2M1220+1126 | ✓ (8 FLT)  | ✗ | ⚠ unverified (2 DRZ) |
 | W2M1252+0715 | ✓ (16 FLT) | ✗ | ⚠ unverified (2 DRZ) |
 | W2M1439+0858 | ✓ (8 FLT)  | ✗ | ⚠ unverified (2 DRZ) |
 | W2M1542+1259 | ✓ (16 FLT) | ✗ | ⚠ unverified (2 DRZ) |
 
-W2M1042+1641 needs TweakReg: 12/16 FLT files have IDC-only WCS (no Gaia refinement).
-Gaia catalog (50 sources, 5' radius) ready in data/tweakreg/ for alignment.
+TweakReg diagnostic complete for W2M1042+1641 (updatehdr=False).
+Gaia catalog, shift file, residual/vector PNGs all in `data/tweakreg/`.
+12/16 fit; 4 nan shifts — cause and acceptability not yet verified.
 
 **Open issues:**
-- 02_tweakreg.ipynb incomplete: shift file inspection + updatehdr=True commit cell needed
-- Drizzled outputs are from previous session's buggy run — image quality not verified
-- mastDownload/ still in notebooks/ — safe to delete (handled by notebook cell)
-- Intermediate AstroDrizzle files (skymatch_mask, staticMask) in drizzled/ dirs
+- Alignment verification incomplete — shift file inspection, source overplots, and
+  residual review (per STScI notebook guide) needed before committing WCS changes
+- 4 nan-shift images — cause unknown; may be pre-aligned or may have too few Gaia
+  matches at their dither position; cannot assume until residuals inspected
+- `updatehdr=False` — Gaia WCS corrections not yet written to any FLT headers
+- `aligned/` for W2M1042+1641 has stale FLTs from aborted prior session — delete before rerunning
+- Imports cell in `03_drizzle.ipynb` is cell 3 (after drizzle cell) — needs to be moved to cell 1
+- All 6 drizzled outputs from previous buggy run — quality unverified
 
 **Next steps:**
-1. Use STScI align_to_catalogs reference as guide to complete Gaia alignment for
-   W2M1042+1641: finish 02_tweakreg.ipynb (shift file inspection cell + updatehdr=True
-   commit cell), verify residuals, write corrected WCS to FLT headers, then run
-   03_drizzle.ipynb to produce clean drizzled mosaics for W2M1042+1641
-2. Verify drizzled outputs for other 5 quasars or re-run 03_drizzle.ipynb cleanly
-3. Clean intermediate AstroDrizzle files (skymatch_mask, staticMask) from drizzled/ dirs
+1. Follow STScI alignment notebook guide for W2M1042+1641:
+   a. Inspect shift file residuals and overplot matched sources on images
+   b. Determine cause of 4 nan-shift images
+   c. Rerun with `updatehdr=True` once residuals are confirmed acceptable
+2. Clear `aligned/` for W2M1042+1641 and copy/link Gaia-aligned FLTs cleanly
+3. Move imports cell in `03_drizzle.ipynb` to the top (before drizzle cell)
+4. Rerun `03_drizzle.ipynb` for W2M1042+1641 using Gaia-aligned FLTs
+5. Verify drizzled output quality for all 6 quasars
