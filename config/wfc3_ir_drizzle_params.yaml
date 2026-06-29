@@ -44,6 +44,28 @@ download:
   product_sub_group: 'FLT'
   data_type: 'CALWF3'
 
+# --- ACS Download ---
+# FLC files have the pixel-based CTE correction applied by CalACS (Anderson & Bedin 2010)
+acs_download:
+  proposal_id: '14706'
+  instrument_name: 'ACS/WFC'
+  project: 'HST'
+  product_sub_group:
+    - 'FLC'
+    - 'FLT'
+  data_type: 'CALACS'
+
+# --- ACS Drizzle ---
+acs_drizzle:
+  final_scale: 0.03          # output pixel scale in arcsec/pixel (native ACS/WFC = 0.05)
+  final_pixfrac: 0.4         # tighter drop size for ACS — finer native pixel scale
+  final_kernel: square
+  driz_sep_bits: 512
+  final_bits: 512
+  combine_type: minmed
+  skymethod: localmin
+  final_wcs: True
+
 # --- Notes ---
 # pixfrac=1.0 is a safe starting point; reduce (e.g. 0.8) to improve resolution
 # if you have sufficient dithers (>4 exposures per target).

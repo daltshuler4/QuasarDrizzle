@@ -6,41 +6,46 @@
 ## Last updated — 2026-06-29
 
 **Progress since last update:**
-- Notebook cleanup complete for 01 and 02: dead imports removed, all TweakReg
-  parameters moved to config/wfc3_ir_drizzle_params.yaml under new `tweakreg:` section
-- Confirmed alignment diagnosis for W2M1042+1641: 4 nan-shift images are GSC242
-  (already on Gaia frame, correct behavior); 12 GSC240 images got valid shifts and
-  are ready for updatehdr=True
-- Root cause of drizzled doubling identified: Gaia DR1 (GSC240) vs DR2 (GSC242)
-  frame offset — will be resolved once TweakReg is rerun with updatehdr=True
-- /end-session skill updated to ask user for session account before writing
+- ACS pipeline scaffolded (notebooks, data_acs/ folder, config sections) but revealed
+  to need a clean rebuild — copied WFC3 structure introduced too many hidden assumptions
+- ACS data downloaded: 5 quasars confirmed, mix of FLC and FLT files discovered
+- W2M2152-0051 found to be all FLT (16 files, no CTE correction applied) — new target
+- Multiple notebook bugs fixed: glob suffix, YAML indent, cwd crash vulnerability
 
-**Pipeline state:**
+**Pipeline state — WFC3/IR (`data/`):**
 | Quasar | Downloaded | Aligned | Drizzled |
 |--------|-----------|---------|----------|
-| W2M0811+0115 | ✓ (16 FLT) | ✗ | ⚠ unverified (2 DRZ) |
-| W2M1042+1641 | ✓ (16 FLT) | ⚠ stale copies in aligned/ | ⚠ unverified (2 DRZ) |
-| W2M1220+1126 | ✓ (8 FLT) | ✗ | ⚠ unverified (2 DRZ) |
-| W2M1252+0715 | ✓ (16 FLT) | ✗ | ⚠ unverified (2 DRZ) |
-| W2M1439+0858 | ✓ (8 FLT) | ✗ | ⚠ unverified (2 DRZ) |
-| W2M1542+1259 | ✓ (16 FLT) | ✗ | ⚠ unverified (2 DRZ) |
+| W2M0811+0115 | ✓ (16 FLT) | ✗ | ⚠ unverified (F105W, F160W) |
+| W2M1042+1641 | ✓ (16 FLT) | ⚠ stale | ⚠ unverified — dropped from pipeline |
+| W2M1220+1126 | ✓ (8 FLT) | ✗ | ⚠ unverified (F105W, F160W) |
+| W2M1252+0715 | ✓ (16 FLT) | ✗ | ⚠ unverified (F105W, F160W) |
+| W2M1439+0858 | ✓ (8 FLT) | ✗ | ⚠ unverified (F105W, F160W) |
+| W2M1542+1259 | ✓ (16 FLT) | ✗ | ⚠ unverified (F125W, F160W) |
 
-TweakReg diagnostic complete for W2M1042+1641. Gaia catalog, shift file,
-residual/vector PNGs all in `data/tweakreg/`. 12/16 images fit; 4 nan shifts
-(GSC242 files — correct, no correction needed).
+**Pipeline state — ACS/WFC (`data_acs/`):**
+| Quasar | FLC | FLT | Drizzled |
+|--------|-----|-----|---------|
+| W2M0035+0114 | 8 | 8 | ⚠ unverified (F475W + F814W _drc) |
+| W2M0043+0052 | 4 | 12 | ⚠ F475W _drc only — F814W needs CTE correction |
+| W2M1106+0221 | 4 | 12 | ⚠ F475W _drc only — F814W needs CTE correction |
+| W2M1242+0440 | 8 | 8 | ⚠ unverified (F475W + F814W _drc) |
+| W2M2152-0051 | 0 | 16 | ✗ — all FLT, CTE correction required first |
 
 **Open issues:**
-- updatehdr=False — Gaia WCS corrections not yet written to any FLT headers
-- aligned/ for W2M1042+1641 has stale FLTs — delete before rerunning with updatehdr=True
-- 03_drizzle.ipynb imports cell is out of order (cell 3, must move to cell 1)
-- 03_drizzle.ipynb: final_rot=0. hardcoded; skysub and clean in config but not wired up
-- All 6 drizzled outputs from prior buggy run — quality unverified
+- ACS target folders still exist in data/raw/ alongside WFC3 data — needs cleanup
+- WFC3: updatehdr=False — Gaia corrections not written to any FLT headers
+- WFC3: all drizzled outputs unverified
+- ACS: W2M2152-0051 and FLT exposures for W2M0043+0052, W2M1106+0221 need CTE correction
+- ACS: current notebooks adapted from WFC3 copy — earmarked for clean rebuild
 
 **Next steps:**
-1. Verify Gaia.MAIN_GAIA_TABLE in notebook 02 (confirm DR3, not DR2)
-2. Rerun TweakReg with updatehdr=True for W2M1042+1641
-3. Clear stale aligned/ for W2M1042+1641 and copy Gaia-corrected FLTs
-4. Fix 03_drizzle.ipynb: move imports cell to position 1, add final_rot to config,
-   wire up skysub and clean
-5. Rerun drizzle for W2M1042+1641 and inspect output for clean single images
-6. Verify drizzled output quality for all 6 quasars
+⭐ PRIMARY: Clean rebuild of ACS pipeline from scratch, cell-by-cell alongside the agent.
+   Also clean up file structure (remove ACS folders from data/raw/).
+
+1. Clean up data/raw/ — remove ACS quasar folders that were left behind
+2. Rebuild ACS notebooks from scratch (user provides task per cell, agent builds clean)
+3. Download RAW ACS files and run CTE correction (CalACS) on FLT-only targets
+4. Add `target_name` list to ACS download query (W2M0035+0114, W2M0043+0052,
+   W2M1106+0221, W2M1242+0440, W2M2152-0051) in config under `acs_download`
+5. Verify WFC3 drizzled output quality for all 5 active targets
+6. Decide whether to rerun WFC3 TweakReg with updatehdr=True before re-drizzling
