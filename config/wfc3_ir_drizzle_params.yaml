@@ -25,6 +25,17 @@ skysub: True
 final_wcs: True            # recompute output WCS
 clean: True                # remove intermediate drizzle products after combining
 
+# --- TweakReg ---
+tweakreg:
+  wcsname: 'Gaia'
+  conv_width: 2.5        # 2x PSF FWHM: 2.5 for WFC3/IR, 3.5 for ACS/WFC or WFC3/UVIS
+  threshold: 30.0        # source detection threshold in sigma
+  search_radius: 5.0     # Gaia catalog search radius in arcmin
+  searchrad: 0.1         # TweakReg matching search radius in arcsec
+  fitgeometry: 'rscale'  # fitting geometry: rscale, shift, general
+  minobj: 4              # minimum matched objects for a valid fit
+  ylimit: 0.3            # y-axis limit for residual plots
+
 # --- Download ---
 download:
   proposal_id: '14706'

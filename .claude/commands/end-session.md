@@ -4,12 +4,19 @@
 
 Write a structured end-of-session summary and update the handoff state:
 
+## Step 0 — Get the user's account
+Before doing anything else, ask the user two questions:
+1. "What happened this session?" — ask them to describe what was done in their own words
+2. "What do you want to do next?" — ask them to state their intended next step(s)
+
+Wait for their response. Use their answers to anchor the session summary and next steps.
+Do not proceed to Step 1 until the user has replied.
+
 ## Step 1 — Gather current state
 1. Inspect data/raw/ and data/processed/ to get the current pipeline state for all 6 quasars
-2. Note what was accomplished this session (3–5 specific bullet points — name notebooks run,
-   quasars processed, config changes made, issues resolved)
+2. Reconcile what you observed in the session with what the user described in Step 0
 3. List any open issues or blockers discovered this session
-4. Write numbered next steps that are specific and immediately actionable
+4. Write numbered next steps that lead with what the user said they want to do next
 
 ## Step 2 — Write to sessions/<DATE>_session.md
 Create a new file at sessions/<DATE>_session.md with full narrative detail:
