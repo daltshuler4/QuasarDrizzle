@@ -3,14 +3,12 @@
 > This file is always the current snapshot. Full session history is in `sessions/`.
 > Read the most recent file there for narrative context, or look back further if needed.
 
-## Last updated — 2026-06-29
+## Last updated — 2026-07-01
 
 **Progress since last update:**
-- ACS pipeline scaffolded (notebooks, data_acs/ folder, config sections) but revealed
-  to need a clean rebuild — copied WFC3 structure introduced too many hidden assumptions
-- ACS data downloaded: 5 quasars confirmed, mix of FLC and FLT files discovered
-- W2M2152-0051 found to be all FLT (16 files, no CTE correction applied) — new target
-- Multiple notebook bugs fixed: glob suffix, YAML indent, cwd crash vulnerability
+- ACS CTE correction completed for all subarray targets
+- ACS drizzle notebook rebuilt from scratch; all 10 DRC files produced
+- ACS pipeline now fully processed through drizzle for all 5 targets
 
 **Pipeline state — WFC3/IR (`data/`):**
 | Quasar | Downloaded | Aligned | Drizzled |
@@ -23,29 +21,22 @@
 | W2M1542+1259 | ✓ (16 FLT) | ✗ | ⚠ unverified (F125W, F160W) |
 
 **Pipeline state — ACS/WFC (`data_acs/`):**
-| Quasar | FLC | FLT | Drizzled |
-|--------|-----|-----|---------|
-| W2M0035+0114 | 8 | 8 | ⚠ unverified (F475W + F814W _drc) |
-| W2M0043+0052 | 4 | 12 | ⚠ F475W _drc only — F814W needs CTE correction |
-| W2M1106+0221 | 4 | 12 | ⚠ F475W _drc only — F814W needs CTE correction |
-| W2M1242+0440 | 8 | 8 | ⚠ unverified (F475W + F814W _drc) |
-| W2M2152-0051 | 0 | 16 | ✗ — all FLT, CTE correction required first |
+| Quasar | FLC | FLT | DRC (F475W) | DRC (F814W) |
+|--------|-----|-----|-------------|-------------|
+| W2M0035+0114 | 8 | 8 | ✓ full-frame (~9974×9974) | ✓ full-frame (~9973×9973) |
+| W2M0043+0052 | 12 | 12 | ✓ full-frame (~7915×7949) | ✓ subarray (~3984×3911) |
+| W2M1106+0221 | 12 | 12 | ✓ full-frame (~9307×9331) | ✓ subarray (~4659×4617) |
+| W2M1242+0440 | 8 | 8 | ✓ full-frame (~9972×9974) | ✓ full-frame (~9972×9974) |
+| W2M2152-0051 | 16 | 16 | ✓ subarray (~4835×4807) | ✓ subarray (~4835×4807) |
 
 **Open issues:**
-- ACS target folders still exist in data/raw/ alongside WFC3 data — needs cleanup
-- WFC3: updatehdr=False — Gaia corrections not written to any FLT headers
-- WFC3: all drizzled outputs unverified
-- ACS: W2M2152-0051 and FLT exposures for W2M0043+0052, W2M1106+0221 need CTE correction
-- ACS: current notebooks adapted from WFC3 copy — earmarked for clean rebuild
+- Intermediate drizzle files (_blt, _crmask, etc.) remain in data_acs/raw/ from last
+  run; cleanup cell in 03_drizzle_acs.ipynb will remove them on next run
+- ACS DRC outputs not yet visually inspected (inspect cell not run this session)
+- WFC3 drizzled outputs remain unverified
+- WFC3 alignment: updatehdr=False — Gaia corrections not written to FLT headers
 
 **Next steps:**
-⭐ PRIMARY: Clean rebuild of ACS pipeline from scratch, cell-by-cell alongside the agent.
-   Also clean up file structure (remove ACS folders from data/raw/).
-
-1. Clean up data/raw/ — remove ACS quasar folders that were left behind
-2. Rebuild ACS notebooks from scratch (user provides task per cell, agent builds clean)
-3. Download RAW ACS files and run CTE correction (CalACS) on FLT-only targets
-4. Add `target_name` list to ACS download query (W2M0035+0114, W2M0043+0052,
-   W2M1106+0221, W2M1242+0440, W2M2152-0051) in config under `acs_download`
-5. Verify WFC3 drizzled output quality for all 5 active targets
-6. Decide whether to rerun WFC3 TweakReg with updatehdr=True before re-drizzling
+1. ⭐ PRIMARY: PSF construction for ACS DRC mosaics
+2. Run inspect cell in 03_drizzle_acs.ipynb to visually verify all 10 DRC outputs
+3. Verify WFC3 drizzled output quality

@@ -46,6 +46,7 @@ download:
 
 # --- ACS Download ---
 # FLC files have the pixel-based CTE correction applied by CalACS (Anderson & Bedin 2010)
+# FLT-only entries require a separate CTE correction step before drizzling
 acs_download:
   proposal_id: '14706'
   instrument_name: 'ACS/WFC'
@@ -54,6 +55,25 @@ acs_download:
     - 'FLC'
     - 'FLT'
   data_type: 'CALACS'
+
+# Expected file type (FLC or FLT) per target and filter
+# FLC = CTE-corrected by CalACS pipeline; FLT = raw calibrated, CTE correction needed
+acs_targets:
+  W2M0035+0114:
+    F475W: FLC
+    F814W: FLC
+  W2M0043+0052:
+    F475W: FLC
+    F814W: FLT
+  W2M1106+0221:
+    F475W: FLC
+    F814W: FLT
+  W2M1242+0440:
+    F475W: FLC
+    F814W: FLC
+  W2M2152-0051:
+    F475W: FLT
+    F814W: FLT
 
 # --- ACS Drizzle ---
 acs_drizzle:
